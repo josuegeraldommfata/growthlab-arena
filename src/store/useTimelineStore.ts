@@ -12,6 +12,7 @@ export interface Post {
   comments: Comment[];
   shares: number;
   scheduled?: string;
+  isScheduled?: boolean;
 }
 
 export interface Comment {
