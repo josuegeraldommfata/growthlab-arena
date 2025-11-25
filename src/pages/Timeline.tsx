@@ -4,9 +4,11 @@ import Layout from '@/components/Layout';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useTimelineStore } from '@/store/useTimelineStore';
-import { Heart, MessageCircle, Share2, Send } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Send, Calendar } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Timeline = () => {
@@ -14,29 +16,40 @@ const Timeline = () => {
   const updateUser = useAuthStore((state) => state.updateUser);
   const { posts, addPost, likePost, sharePost } = useTimelineStore();
   const [newPost, setNewPost] = useState('');
+  const [scheduledDate, setScheduledDate] = useState('');
+  const [showSchedule, setShowSchedule] = useState(false);
   const { toast } = useToast();
 
   const handlePost = () => {
     if (!newPost.trim() || !user) return;
+    
+    const postTimestamp = scheduledDate || new Date().toISOString();
+    const isScheduled = !!scheduledDate && new Date(scheduledDate) > new Date();
     
     addPost({
       userId: user.id,
       userName: user.name,
       userAvatar: user.avatar,
       content: newPost,
-      timestamp: new Date().toISOString()
+      timestamp: postTimestamp,
+      scheduled: scheduledDate || undefined,
+      isScheduled
     });
     
-    // Dar pontos por postar
-    updateUser({ 
-      xp: (user.xp || 0) + 10,
-      coins: (user.coins || 0) + 5
-    });
+    if (!isScheduled) {
+      updateUser({ 
+        xp: (user.xp || 0) + 10,
+        coins: (user.coins || 0) + 5
+      });
+    }
     
     setNewPost('');
+    setScheduledDate('');
+    setShowSchedule(false);
+    
     toast({
-      title: "Post publicado!",
-      description: "+10 XP e +5 Coins",
+      title: isScheduled ? "Post agendado!" : "Post publicado!",
+      description: isScheduled ? "Seu post será publicado na data agendada" : "+10 XP e +5 Coins",
     });
   };
 
@@ -90,14 +103,36 @@ const Timeline = () => {
                   onChange={(e) => setNewPost(e.target.value)}
                   className="min-h-24 mb-3"
                 />
-                <Button 
-                  onClick={handlePost}
-                  disabled={!newPost.trim()}
-                  className="bg-gradient-to-r from-primary to-secondary"
-                >
-                  <Send className="w-4 h-4 mr-2" />
-                  Publicar
-                </Button>
+                
+                {showSchedule && (
+                  <div className="mb-3">
+                    <Label>Agendar publicação</Label>
+                    <Input
+                      type="datetime-local"
+                      value={scheduledDate}
+                      onChange={(e) => setScheduledDate(e.target.value)}
+                      min={new Date().toISOString().slice(0, 16)}
+                    />
+                  </div>
+                )}
+                
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={handlePost}
+                    disabled={!newPost.trim()}
+                    className="bg-gradient-to-r from-primary to-secondary"
+                  >
+                    <Send className="w-4 h-4 mr-2" />
+                    {scheduledDate ? 'Agendar' : 'Publicar'}
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => setShowSchedule(!showSchedule)}
+                  >
+                    <Calendar className="w-4 h-4 mr-2" />
+                    {showSchedule ? 'Cancelar' : 'Agendar'}
+                  </Button>
+                </div>
               </div>
             </div>
           </Card>
@@ -114,9 +149,14 @@ const Timeline = () => {
                   <div className="flex gap-4 mb-4">
                     <div className="text-3xl">{post.userAvatar}</div>
                     <div className="flex-1">
-                      <p className="font-semibold">{post.userName}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-semibold">{post.userName}</p>
+                        {post.isScheduled && (
+                          <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">Agendado</span>
+                        )}
+                      </div>
                       <p className="text-xs text-muted-foreground">
-                        {new Date(post.timestamp).toLocaleString()}
+                        {post.isScheduled ? `Agendado para ${new Date(post.timestamp).toLocaleString()}` : new Date(post.timestamp).toLocaleString()}
                       </p>
                     </div>
                   </div>

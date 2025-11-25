@@ -9,7 +9,9 @@ import {
   Settings,
   Tv,
   LogOut,
-  Target
+  Target,
+  ShoppingBag,
+  Bell
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -34,8 +36,9 @@ const Layout = ({ children }: LayoutProps) => {
     { to: '/tasks', icon: Target, label: 'Tarefas' },
     { to: '/races', icon: Trophy, label: 'Corridas' },
     { to: '/learn', icon: BookOpen, label: 'Escola' },
+    { to: '/shop', icon: ShoppingBag, label: 'Loja' },
+    { to: '/notifications', icon: Bell, label: 'Notificações' },
     { to: '/timeline', icon: MessageSquare, label: 'Intranet' },
-    { to: '/tv', icon: Tv, label: 'TV Dashboard' },
   ];
 
   const adminMenuItems = [

@@ -11,6 +11,8 @@ import Races from "./pages/Races";
 import Learn from "./pages/Learn";
 import Timeline from "./pages/Timeline";
 import TVDashboard from "./pages/TVDashboard";
+import Shop from "./pages/Shop";
+import Notifications from "./pages/Notifications";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminTeams from "./pages/AdminTeams";
 import AdminRaces from "./pages/AdminRaces";
@@ -35,6 +37,8 @@ const App = () => (
           <Route path="/races" element={<Races />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/timeline" element={<Timeline />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/tv" element={<TVDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/teams" element={<AdminTeams />} />
