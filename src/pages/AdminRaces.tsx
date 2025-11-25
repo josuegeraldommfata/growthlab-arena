@@ -9,11 +9,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useGameStore, Race } from '@/store/useGameStore';
 import { useToast } from '@/hooks/use-toast';
-import { Trophy, Plus, Calendar } from 'lucide-react';
+import { Trophy, Plus, Calendar, Eye } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const AdminRaces = () => {
   const { races, addRace } = useGameStore();
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -178,6 +180,14 @@ const AdminRaces = () => {
                       </p>
                     </div>
                   </div>
+
+                  <Button 
+                    onClick={() => navigate(`/race-track/${race.id}`)}
+                    className="w-full mt-4 bg-gradient-to-r from-primary to-secondary"
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Visualizar Pista
+                  </Button>
                 </Card>
               </motion.div>
             ))}

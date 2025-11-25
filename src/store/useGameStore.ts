@@ -57,12 +57,20 @@ export interface Course {
   materials: string[];
 }
 
+export interface User {
+  id: string;
+  name: string;
+  points: number;
+  avatar?: string;
+}
+
 interface GameState {
   tasks: Task[];
   races: Race[];
   teams: Team[];
   quizzes: Quiz[];
   courses: Course[];
+  users: User[];
   addTask: (task: Task) => void;
   completeTask: (id: string) => void;
   addRace: (race: Race) => void;
@@ -97,13 +105,39 @@ export const useGameStore = create<GameState>()(
       races: [
         {
           id: '1',
-          name: 'Corrida Sprint Q1',
-          theme: 'Prospecção Máxima',
+          name: 'Vendas Revier',
+          theme: 'Prospecção Máxima - Meta de Vendas Q1',
           status: 'active',
-          startDate: '2024-01-01',
-          endDate: '2024-03-31',
-          participants: ['1'],
+          startDate: '2025-01-01',
+          endDate: '2025-03-31',
+          participants: ['1', '2', '3', '4'],
           indicators: ['vendas', 'prospeccao']
+        }
+      ],
+      users: [
+        {
+          id: '1',
+          name: 'Beatriz de Melo',
+          points: 2455,
+          avatar: '🏎️'
+        },
+        {
+          id: '2',
+          name: 'Renato Barbosa',
+          points: 3200,
+          avatar: '🚗'
+        },
+        {
+          id: '3',
+          name: 'Barbara Miranda',
+          points: 2800,
+          avatar: '🚙'
+        },
+        {
+          id: '4',
+          name: 'Daniel de Jesus',
+          points: 50,
+          avatar: '🚕'
         }
       ],
       teams: [
