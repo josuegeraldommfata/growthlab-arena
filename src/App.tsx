@@ -16,6 +16,7 @@ import AdminTeams from "./pages/AdminTeams";
 import AdminRaces from "./pages/AdminRaces";
 import AdminLearn from "./pages/AdminLearn";
 import AdminProducts from "./pages/AdminProducts";
+import RaceTrack from "./pages/RaceTrack";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/admin/races" element={<AdminRaces />} />
           <Route path="/admin/learn" element={<AdminLearn />} />
           <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/race-track/:raceId" element={<RaceTrack />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

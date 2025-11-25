@@ -2,11 +2,14 @@ import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useGameStore } from '@/store/useGameStore';
-import { Trophy, Calendar, Users, Flag } from 'lucide-react';
+import { Trophy, Calendar, Users, Flag, Eye } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Races = () => {
   const { races } = useGameStore();
+  const navigate = useNavigate();
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
@@ -93,10 +96,19 @@ const Races = () => {
                     </div>
 
                     {race.status === 'active' && (
-                      <div className="mt-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
-                        <p className="text-sm font-medium text-primary">
-                          🔥 Você está participando desta corrida! Continue completando tarefas para subir no ranking.
-                        </p>
+                      <div className="mt-6 space-y-3">
+                        <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
+                          <p className="text-sm font-medium text-primary">
+                            🔥 Você está participando desta corrida! Continue completando tarefas para subir no ranking.
+                          </p>
+                        </div>
+                        <Button 
+                          onClick={() => navigate(`/race-track/${race.id}`)}
+                          className="w-full bg-gradient-to-r from-primary to-secondary"
+                        >
+                          <Eye className="w-4 h-4 mr-2" />
+                          Ver Pista de Corrida
+                        </Button>
                       </div>
                     )}
                   </Card>
