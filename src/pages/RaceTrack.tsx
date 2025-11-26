@@ -3,11 +3,29 @@ import { useGameStore } from '@/store/useGameStore';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Trophy, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { RaceTrackScenario, type ScenarioType } from '@/components/RaceTrackScenarios';
+import { useEffect, useState } from 'react';
 
 const RaceTrack = () => {
   const { raceId } = useParams();
   const navigate = useNavigate();
   const { races, users } = useGameStore();
+  const [liveParticipants, setLiveParticipants] = useState<any[]>([]);
+  
+  // Simula atualização em tempo real a cada 5 segundos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLiveParticipants(prev => {
+        if (prev.length === 0) return prev;
+        return prev.map(p => ({
+          ...p,
+          points: p.points + Math.floor(Math.random() * 50)
+        }));
+      });
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
   
   const race = races.find(r => r.id === raceId);
   
@@ -25,7 +43,7 @@ const RaceTrack = () => {
   }
 
   // Pegar participantes com suas pontuações
-  const participants = race.participants.map(userId => {
+  const initialParticipants = race.participants.map(userId => {
     const user = users.find(u => u.id === userId);
     return {
       id: userId,
@@ -33,7 +51,33 @@ const RaceTrack = () => {
       points: user?.points || 0,
       avatar: user?.avatar || '🚗'
     };
-  }).sort((a, b) => b.points - a.points);
+  });
+  
+  // Usar participantes ao vivo ou iniciais
+  const participants = (liveParticipants.length > 0 ? liveParticipants : initialParticipants)
+    .sort((a, b) => b.points - a.points);
+  
+  // Atualizar participantes ao vivo quando mudar
+  useEffect(() => {
+    if (liveParticipants.length === 0) {
+      setLiveParticipants(initialParticipants);
+    }
+  }, [race.id]);
+  
+  // Definir cenário baseado no tema da corrida
+  const getScenarioFromTheme = (theme: string): ScenarioType => {
+    const themeMap: Record<string, ScenarioType> = {
+      'vendas': 'city',
+      'prospecção': 'highway',
+      'meta anual': 'futuristic',
+      'trimestre': 'mountain',
+      'sprint': 'beach'
+    };
+    const themeKey = Object.keys(themeMap).find(key => theme.toLowerCase().includes(key));
+    return themeMap[themeKey || ''] || 'city';
+  };
+  
+  const scenario = getScenarioFromTheme(race.theme);
 
   // Calcular posição na pista (0-100%)
   const maxPoints = Math.max(...participants.map(p => p.points), 1);
@@ -45,7 +89,9 @@ const RaceTrack = () => {
   const vehicles = ['🏎️', '🚙', '🚗', '🚕', '🚐'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#6000c4] to-[#01051e] overflow-hidden relative">
+    <div className="min-h-screen overflow-hidden relative">
+      {/* Cenário de fundo */}
+      <RaceTrackScenario type={scenario} />
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-10 p-6">
         <Button 
