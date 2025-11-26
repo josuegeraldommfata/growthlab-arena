@@ -11,7 +11,9 @@ import {
   LogOut,
   Target,
   ShoppingBag,
-  Bell
+  Bell,
+  School,
+  Route
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -45,7 +47,8 @@ const Layout = ({ children }: LayoutProps) => {
     { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard Admin' },
     { to: '/admin/teams', icon: Users, label: 'Equipes' },
     { to: '/admin/races', icon: Trophy, label: 'Gerenciar Corridas' },
-    { to: '/admin/learn', icon: BookOpen, label: 'Conteúdo' },
+    { to: '/admin/learn', icon: School, label: 'Conteúdo' },
+    { to: '/admin/learning-path', icon: Route, label: 'Trilhas' },
     { to: '/admin/products', icon: Settings, label: 'Produtos' },
   ];
 

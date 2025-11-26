@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useGameStore, Race } from '@/store/useGameStore';
 import { useToast } from '@/hooks/use-toast';
-import { Trophy, Plus, Calendar, Eye } from 'lucide-react';
+import { Trophy, Plus, Calendar, Eye, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const AdminRaces = () => {
@@ -181,13 +181,22 @@ const AdminRaces = () => {
                     </div>
                   </div>
 
-                  <Button 
-                    onClick={() => navigate(`/race-track/${race.id}`)}
-                    className="w-full mt-4 bg-gradient-to-r from-primary to-secondary"
-                  >
-                    <Eye className="w-4 h-4 mr-2" />
-                    Visualizar Pista
-                  </Button>
+                  <div className="grid grid-cols-2 gap-3 mt-4">
+                    <Button 
+                      onClick={() => navigate(`/race-config/${race.id}`)}
+                      variant="outline"
+                    >
+                      <Settings className="w-4 h-4 mr-2" />
+                      Configurar
+                    </Button>
+                    <Button 
+                      onClick={() => navigate(`/race-track/${race.id}`)}
+                      className="bg-gradient-to-r from-primary to-secondary"
+                    >
+                      <Eye className="w-4 h-4 mr-2" />
+                      Visualizar
+                    </Button>
+                  </div>
                 </Card>
               </motion.div>
             ))}
