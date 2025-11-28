@@ -1,14 +1,18 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import MiniRaceTrack from '@/components/MiniRaceTrack';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useGameStore } from '@/store/useGameStore';
-import { Trophy, Target, Zap, TrendingUp } from 'lucide-react';
+import { Trophy, Target, Zap, TrendingUp, Map, ArrowRight, Sparkles } from 'lucide-react';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  const { tasks, races } = useGameStore();
+  const { tasks, races, users, quizzes } = useGameStore();
   
   const userTasks = tasks.filter(t => t.userId === user?.id);
   const pendingTasks = userTasks.filter(t => !t.completed);
@@ -56,6 +60,38 @@ const Dashboard = () => {
             ))}
           </div>
 
+          {/* Journey Preview Card */}
+          <Card className="p-6 mb-8 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 border-2 border-primary/20">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="text-5xl">
+                  <Sparkles className="w-12 h-12 text-yellow-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-1 flex items-center gap-2">
+                    <Map className="w-5 h-5 text-primary" />
+                    Sua Jornada
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Complete tarefas, quizzes e derrote bosses para subir de nível!
+                  </p>
+                  <div className="flex gap-4 mt-2">
+                    <span className="text-sm text-muted-foreground">
+                      📋 {pendingTasks.length} tarefas pendentes
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      📝 {quizzes.length} quizzes disponíveis
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <Button onClick={() => navigate('/journey')} className="bg-gradient-to-r from-primary to-secondary">
+                Começar Jornada
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </Card>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <Card className="p-6">
               <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -92,6 +128,20 @@ const Dashboard = () => {
               ))}
             </Card>
           </div>
+
+          {/* Mini Race Track */}
+          <Card className="p-6 mb-8">
+            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-yellow-400" />
+              Ranking da Corrida
+            </h3>
+            <MiniRaceTrack users={users} />
+            <div className="mt-4 text-center">
+              <Button variant="outline" onClick={() => navigate('/races')}>
+                Ver Todas as Corridas
+              </Button>
+            </div>
+          </Card>
 
           <Card className="p-6">
             <h3 className="text-xl font-semibold mb-4">Tarefas Pendentes</h3>

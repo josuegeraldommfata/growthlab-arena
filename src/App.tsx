@@ -18,9 +18,11 @@ import AdminTeams from "./pages/AdminTeams";
 import AdminRaces from "./pages/AdminRaces";
 import AdminLearn from "./pages/AdminLearn";
 import AdminProducts from "./pages/AdminProducts";
+import AdminTasks from "./pages/AdminTasks";
 import RaceTrack from "./pages/RaceTrack";
 import RaceConfig from "./pages/RaceConfig";
 import LearningPath from "./pages/LearningPath";
+import Journey from "./pages/Journey";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/journey" element={<Journey />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/races" element={<Races />} />
           <Route path="/learn" element={<Learn />} />
@@ -44,6 +47,7 @@ const App = () => (
           <Route path="/tv" element={<TVDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/teams" element={<AdminTeams />} />
+          <Route path="/admin/tasks" element={<AdminTasks />} />
           <Route path="/admin/races" element={<AdminRaces />} />
           <Route path="/admin/learn" element={<AdminLearn />} />
           <Route path="/admin/products" element={<AdminProducts />} />

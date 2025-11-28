@@ -13,7 +13,9 @@ import {
   ShoppingBag,
   Bell,
   School,
-  Route
+  Route,
+  Map,
+  ClipboardList
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -35,6 +37,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   const userMenuItems = [
     { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { to: '/journey', icon: Map, label: 'Jornada' },
     { to: '/tasks', icon: Target, label: 'Tarefas' },
     { to: '/races', icon: Trophy, label: 'Corridas' },
     { to: '/learn', icon: BookOpen, label: 'Escola' },
@@ -46,6 +49,7 @@ const Layout = ({ children }: LayoutProps) => {
   const adminMenuItems = [
     { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard Admin' },
     { to: '/admin/teams', icon: Users, label: 'Equipes' },
+    { to: '/admin/tasks', icon: ClipboardList, label: 'Tarefas' },
     { to: '/admin/races', icon: Trophy, label: 'Gerenciar Corridas' },
     { to: '/admin/learn', icon: School, label: 'Conteúdo' },
     { to: '/admin/learning-path', icon: Route, label: 'Trilhas' },
