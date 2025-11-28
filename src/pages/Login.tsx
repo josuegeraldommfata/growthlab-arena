@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useToast } from '@/hooks/use-toast';
+import { User, Shield } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,6 +15,16 @@ const Login = () => {
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
   const { toast } = useToast();
+
+  const fillUserCredentials = () => {
+    setEmail('usuario@email.com');
+    setPassword('user123');
+  };
+
+  const fillAdminCredentials = () => {
+    setEmail('admin@email.com');
+    setPassword('admin123');
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,10 +95,31 @@ const Login = () => {
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            <p>Credenciais de teste:</p>
-            <p className="mt-2">👤 Usuario: usuario@email.com / user123</p>
-            <p>👨‍💼 Admin: admin@email.com / admin123</p>
+          <div className="mt-6 space-y-3">
+            <p className="text-center text-sm text-muted-foreground">Acesso rápido:</p>
+            <div className="grid grid-cols-2 gap-2">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={fillUserCredentials}
+                className="flex items-center gap-2"
+              >
+                <User className="w-4 h-4" />
+                Usuário
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={fillAdminCredentials}
+                className="flex items-center gap-2"
+              >
+                <Shield className="w-4 h-4" />
+                Admin
+              </Button>
+            </div>
+            <p className="text-xs text-center text-muted-foreground mt-2">
+              Clique para preencher as credenciais
+            </p>
           </div>
         </Card>
       </motion.div>
