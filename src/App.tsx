@@ -20,11 +20,17 @@ import AdminLearn from "./pages/AdminLearn";
 import AdminProducts from "./pages/AdminProducts";
 import AdminTasks from "./pages/AdminTasks";
 import AdminRewards from "./pages/AdminRewards";
+import AdminUsers from "./pages/AdminUsers";
 import RaceTrack from "./pages/RaceTrack";
 import Exchange from "./pages/Exchange";
 import RaceConfig from "./pages/RaceConfig";
 import LearningPath from "./pages/LearningPath";
 import Journey from "./pages/Journey";
+import Profile from "./pages/Profile";
+import MyTeam from "./pages/MyTeam";
+import Leaderboard from "./pages/Leaderboard";
+import QuizPlay from "./pages/QuizPlay";
+import CourseView from "./pages/CourseView";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +53,11 @@ const App = () => (
           <Route path="/shop" element={<Shop />} />
           <Route path="/exchange" element={<Exchange />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/my-team" element={<MyTeam />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/quiz/:quizId" element={<QuizPlay />} />
+          <Route path="/course/:courseId" element={<CourseView />} />
           <Route path="/tv" element={<TVDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/teams" element={<AdminTeams />} />
@@ -55,6 +66,7 @@ const App = () => (
           <Route path="/admin/learn" element={<AdminLearn />} />
           <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/admin/rewards" element={<AdminRewards />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
           <Route path="/admin/learning-path" element={<LearningPath />} />
           <Route path="/race-track/:raceId" element={<RaceTrack />} />
           <Route path="/race-config/:raceId" element={<RaceConfig />} />
