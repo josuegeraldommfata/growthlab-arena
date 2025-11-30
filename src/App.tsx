@@ -19,7 +19,9 @@ import AdminRaces from "./pages/AdminRaces";
 import AdminLearn from "./pages/AdminLearn";
 import AdminProducts from "./pages/AdminProducts";
 import AdminTasks from "./pages/AdminTasks";
+import AdminRewards from "./pages/AdminRewards";
 import RaceTrack from "./pages/RaceTrack";
+import Exchange from "./pages/Exchange";
 import RaceConfig from "./pages/RaceConfig";
 import LearningPath from "./pages/LearningPath";
 import Journey from "./pages/Journey";
@@ -43,6 +45,7 @@ const App = () => (
           <Route path="/learn" element={<Learn />} />
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/exchange" element={<Exchange />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/tv" element={<TVDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -51,6 +54,7 @@ const App = () => (
           <Route path="/admin/races" element={<AdminRaces />} />
           <Route path="/admin/learn" element={<AdminLearn />} />
           <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/rewards" element={<AdminRewards />} />
           <Route path="/admin/learning-path" element={<LearningPath />} />
           <Route path="/race-track/:raceId" element={<RaceTrack />} />
           <Route path="/race-config/:raceId" element={<RaceConfig />} />
