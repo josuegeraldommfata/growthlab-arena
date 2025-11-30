@@ -17,7 +17,10 @@ import {
   Map,
   ClipboardList,
   Gift,
-  Repeat
+  Repeat,
+  User,
+  Crown,
+  UsersRound
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -42,16 +45,20 @@ const Layout = ({ children }: LayoutProps) => {
     { to: '/journey', icon: Map, label: 'Jornada' },
     { to: '/tasks', icon: Target, label: 'Tarefas' },
     { to: '/races', icon: Trophy, label: 'Corridas' },
+    { to: '/leaderboard', icon: Crown, label: 'Ranking' },
     { to: '/learn', icon: BookOpen, label: 'Escola' },
+    { to: '/my-team', icon: UsersRound, label: 'Minha Equipe' },
     { to: '/exchange', icon: Repeat, label: 'Trocar Prêmios' },
     { to: '/shop', icon: ShoppingBag, label: 'Loja' },
-    { to: '/notifications', icon: Bell, label: 'Notificações' },
     { to: '/timeline', icon: MessageSquare, label: 'Intranet' },
+    { to: '/notifications', icon: Bell, label: 'Notificações' },
+    { to: '/profile', icon: User, label: 'Meu Perfil' },
   ];
 
   const adminMenuItems = [
     { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard Admin' },
-    { to: '/admin/teams', icon: Users, label: 'Equipes' },
+    { to: '/admin/users', icon: Users, label: 'Usuários' },
+    { to: '/admin/teams', icon: UsersRound, label: 'Equipes' },
     { to: '/admin/tasks', icon: ClipboardList, label: 'Tarefas' },
     { to: '/admin/races', icon: Trophy, label: 'Gerenciar Corridas' },
     { to: '/admin/learn', icon: School, label: 'Conteúdo' },
