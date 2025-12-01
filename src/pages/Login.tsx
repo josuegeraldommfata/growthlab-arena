@@ -54,14 +54,21 @@ const Login = () => {
       >
         <Card className="w-full max-w-md p-8 backdrop-blur-sm bg-card/80">
           <div className="text-center mb-8">
-            <motion.h1 
-              className="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-2"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              GrowthLab Xp
-            </motion.h1>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <img 
+                src="/assets/folha degrade roxo.png" 
+                alt="GrowthLab Xp" 
+                className="h-12 w-auto object-contain"
+              />
+              <motion.h1 
+                className="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent"
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                GrowthLab Xp
+              </motion.h1>
+            </div>
             <p className="text-muted-foreground">Sistema de gamificação para equipes</p>
           </div>
 

@@ -79,13 +79,20 @@ const RaceTrack = () => {
   
   const scenario = getScenarioFromTheme(race.theme);
 
-  // Calcular posição na pista (0-100%)
+  // Calcular posição na pista baseada na pontuação
   const maxPoints = Math.max(...participants.map(p => p.points), 1);
+  const minPoints = Math.min(...participants.map(p => p.points), 0);
   const getPosition = (points: number) => {
-    return (points / maxPoints) * 85; // 85% max para não sair da tela
+    // Todos começam na posição inicial, mas diferenças de pontuação criam separação VISÍVEL
+    if (maxPoints === minPoints) return 2; // Se todos têm a mesma pontuação, ficam no início
+    const normalizedPoints = (points - minPoints) / (maxPoints - minPoints);
+    // Usa exponencial forte para amplificar MUITO as diferenças e evitar que fiquem lado a lado
+    // Quanto menor a pontuação, MUITO mais atrás fica
+    const separationFactor = Math.pow(1 - normalizedPoints, 2.5); // Exponencial forte para amplificar
+    return 2 + (separationFactor * 40); // Primeiro em 2%, outros bem separados até 42%
   };
 
-  // Carros diferentes para cada posição
+  // Carros diferentes para cada posição - todos virados para direita (finish line)
   const vehicles = ['🏎️', '🚙', '🚗', '🚕', '🚐'];
 
   return (
@@ -117,8 +124,8 @@ const RaceTrack = () => {
       {/* Skyline de prédios */}
       <div className="absolute top-[15%] left-0 right-0 h-[25%] flex items-end z-5">
         {[...Array(20)].map((_, i) => {
-          const height = 60 + Math.random() * 120;
-          const width = 40 + Math.random() * 30;
+          const height = 80 + Math.random() * 140;
+          const width = 50 + Math.random() * 35;
           return (
             <div
               key={i}
@@ -156,55 +163,11 @@ const RaceTrack = () => {
                   </div>
                 ))}
               </div>
-              {/* Topo do prédio */}
-              {i % 3 === 0 && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-3 h-8 bg-red-500 rounded-full">
-                  <motion.div
-                    className="w-full h-full bg-red-400 rounded-full"
-                    animate={{ opacity: [1, 0.3, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  />
-                </div>
-              )}
             </div>
           );
         })}
       </div>
 
-      {/* Arquibancadas grandes */}
-      <div className="absolute top-[35%] left-[2%] w-[25%] h-20 z-10">
-        <div className="w-full h-full bg-gradient-to-b from-gray-500 to-gray-700 rounded-t-lg border-t-4 border-gray-400">
-          <div className="grid grid-cols-12 gap-1 p-2">
-            {[...Array(36)].map((_, i) => (
-              <motion.div 
-                key={i} 
-                className="w-3 h-4 rounded-full"
-                style={{ backgroundColor: ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#8b5cf6', '#ec4899'][i % 6] }}
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 0.4, repeat: Infinity, delay: i * 0.05 }}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="w-full h-4 bg-gradient-to-b from-gray-700 to-gray-800" />
-      </div>
-
-      <div className="absolute top-[35%] right-[2%] w-[25%] h-20 z-10">
-        <div className="w-full h-full bg-gradient-to-b from-gray-500 to-gray-700 rounded-t-lg border-t-4 border-gray-400">
-          <div className="grid grid-cols-12 gap-1 p-2">
-            {[...Array(36)].map((_, i) => (
-              <motion.div 
-                key={i} 
-                className="w-3 h-4 rounded-full"
-                style={{ backgroundColor: ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#8b5cf6', '#ec4899'][i % 6] }}
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 0.4, repeat: Infinity, delay: i * 0.08 }}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="w-full h-4 bg-gradient-to-b from-gray-700 to-gray-800" />
-      </div>
 
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-20 p-4">
@@ -241,17 +204,6 @@ const RaceTrack = () => {
           <div className="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(90deg,transparent,transparent_30px,#166534_30px,#166534_32px)]" />
         </div>
 
-        {/* Placas de publicidade */}
-        <div className="absolute top-0 left-0 right-0 flex justify-around px-8 z-10">
-          {['SPEED', 'TURBO', 'RACE', 'FAST', 'WIN', 'GO!'].map((text, i) => (
-            <div 
-              key={i}
-              className="px-4 py-1 bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 rounded text-white text-xs font-bold shadow-lg"
-            >
-              {text}
-            </div>
-          ))}
-        </div>
 
         {/* Zebra superior */}
         <div className="h-3 bg-[repeating-linear-gradient(90deg,#dc2626_0px,#dc2626_25px,#ffffff_25px,#ffffff_50px)]" />
@@ -265,18 +217,14 @@ const RaceTrack = () => {
           <div className="absolute top-[33%] left-0 right-0 h-1 bg-[repeating-linear-gradient(90deg,#ffffff_0px,#ffffff_50px,transparent_50px,transparent_100px)] opacity-60" />
           <div className="absolute top-[66%] left-0 right-0 h-1 bg-[repeating-linear-gradient(90deg,#ffffff_0px,#ffffff_50px,transparent_50px,transparent_100px)] opacity-60" />
           
-          {/* Linha de largada/chegada */}
-          <div className="absolute right-[8%] top-0 bottom-0 w-10 bg-[repeating-linear-gradient(0deg,#ffffff_0px,#ffffff_12px,#000000_12px,#000000_24px)]" />
-          
-          {/* Bandeira quadriculada */}
-          <div className="absolute right-[7%] -top-8 z-20">
-            <div className="w-12 h-10 bg-[conic-gradient(#000_0deg_90deg,#fff_90deg_180deg,#000_180deg_270deg,#fff_270deg_360deg)] bg-[length:12px_10px] border-2 border-gray-600" />
-            <div className="w-2 h-10 bg-gray-600 mx-auto" />
-          </div>
+          {/* Linha de largada/chegada - removida da pista */}
 
           {/* Participantes */}
           {participants.map((participant, index) => {
-            const position = getPosition(participant.points);
+            // Posição baseada no RANK (1, 2, 3, 4) - INVERTIDO
+            // 1º lugar: mais atrás, 2º: pouco à frente, 3º: mais à frente, 4º: na frente
+            const rankPositions = [25, 15, 5, 2]; // Posições fixas por rank (1º atrás, 4º na frente)
+            const position = rankPositions[index] || 2;
             const totalLanes = participants.length;
             const laneHeight = 180 / (totalLanes + 1);
             const verticalPos = (index + 1) * laneHeight - 20;
@@ -285,8 +233,8 @@ const RaceTrack = () => {
               <motion.div
                 key={participant.id}
                 className="absolute z-20"
-                initial={{ left: '3%' }}
-                animate={{ left: `${Math.min(position, 82)}%` }}
+                initial={{ left: '2%' }}
+                animate={{ left: `${position}%` }}
                 transition={{ 
                   duration: 2,
                   delay: index * 0.15,
@@ -297,11 +245,33 @@ const RaceTrack = () => {
                   top: `${verticalPos}px`
                 }}
               >
-                {/* Badge - posicionado ao lado do carro */}
+                {/* Carro - virado para direita (finish line) */}
                 <motion.div
-                  className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap z-30"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  className="relative"
+                  animate={{ x: [0, 1, 0, -1, 0] }}
+                  transition={{ duration: 0.2, repeat: Infinity }}
+                  style={{ transform: 'scaleX(-1)' }}
+                >
+                  <div className="absolute top-9 left-1 w-10 h-2 bg-black/40 rounded-full blur-sm" />
+                  <div className="text-4xl drop-shadow-xl" style={{ transform: 'scaleX(-1)' }}>
+                    {vehicles[index % vehicles.length]}
+                  </div>
+                  {/* Rastro de velocidade - atrás do carro (lado esquerdo) */}
+                  <motion.div
+                    className="absolute top-1/2 -translate-y-1/2 -left-5 flex gap-0.5"
+                    animate={{ opacity: [0.2, 0.7, 0.2] }}
+                    transition={{ duration: 0.3, repeat: Infinity }}
+                  >
+                    <div className="w-3 h-0.5 bg-white/60 rounded-full" />
+                    <div className="w-2 h-0.5 bg-white/40 rounded-full" />
+                  </motion.div>
+                </motion.div>
+
+                {/* Badge - posicionado à frente (direita) do carro para não tampar */}
+                <motion.div
+                  className="absolute top-1/2 -translate-y-1/2 left-full ml-4 whitespace-nowrap z-30"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.15 + 0.5 }}
                 >
                   <div className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 px-2.5 py-1 rounded-full shadow-xl border-2 border-white/50">
@@ -312,27 +282,6 @@ const RaceTrack = () => {
                       {participant.name.split(' ')[0].toUpperCase()} | {participant.points}
                     </span>
                   </div>
-                </motion.div>
-
-                {/* Carro */}
-                <motion.div
-                  className="relative"
-                  animate={{ x: [0, 1, 0, -1, 0] }}
-                  transition={{ duration: 0.2, repeat: Infinity }}
-                >
-                  <div className="absolute top-9 left-1 w-10 h-2 bg-black/40 rounded-full blur-sm" />
-                  <div className="text-4xl drop-shadow-xl">
-                    {vehicles[index % vehicles.length]}
-                  </div>
-                  {/* Rastro de velocidade */}
-                  <motion.div
-                    className="absolute top-1/2 -translate-y-1/2 -left-5 flex gap-0.5"
-                    animate={{ opacity: [0.2, 0.7, 0.2] }}
-                    transition={{ duration: 0.3, repeat: Infinity }}
-                  >
-                    <div className="w-3 h-0.5 bg-white/60 rounded-full" />
-                    <div className="w-2 h-0.5 bg-white/40 rounded-full" />
-                  </motion.div>
                 </motion.div>
               </motion.div>
             );
@@ -352,6 +301,166 @@ const RaceTrack = () => {
 
         {/* Muro de proteção */}
         <div className="h-2 bg-gradient-to-b from-blue-500 to-blue-700" />
+      </div>
+
+      {/* Faixa de chegada tipo F1 e bandeira - no final da pista, fora da pista */}
+      <div className="absolute top-[28%] right-0 h-[180px] z-25">
+        {/* Linha de chegada tipo F1 - faixas pretas e brancas verticais - cobrindo toda a altura da pista */}
+        <div className="absolute right-14 top-8 bottom-0 w-[55px] h-[192px] bg-[repeating-linear-gradient(0deg,#ffffff_0px,#ffffff_12px,#000000_12px,#000000_24px)]" />
+        
+        {/* Bandeira quadriculada - acima da faixa de chegada, um pouco mais alta */}
+        <div className="absolute right-14 -top-14 z-30">
+          <div className="w-14 h-12 bg-[conic-gradient(#000_0deg_90deg,#fff_90deg_180deg,#000_180deg_270deg,#fff_270deg_360deg)] bg-[length:14px_12px] border-2 border-gray-600 shadow-xl" />
+          <div className="w-2.5 h-12 bg-gray-600 mx-auto shadow-lg" />
+        </div>
+      </div>
+
+      {/* Arquibancada com bonequinhos animados - abaixo da pista e acima dos troféus */}
+      <div className="absolute bottom-32 left-0 right-0 h-28 z-20">
+        {/* Estrutura da arquibancada melhorada */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-500 via-gray-600 to-gray-800 rounded-t-xl border-t-4 border-gray-400 shadow-2xl">
+          {/* Degraus da arquibancada */}
+          <div className="absolute bottom-0 left-0 right-0 h-5 bg-gradient-to-b from-gray-400 to-gray-500 rounded-t-lg" />
+          <div className="absolute bottom-5 left-0 right-0 h-4 bg-gradient-to-b from-gray-500 to-gray-600" />
+          <div className="absolute bottom-9 left-0 right-0 h-3 bg-gradient-to-b from-gray-600 to-gray-700" />
+          <div className="absolute bottom-12 left-0 right-0 h-2 bg-gradient-to-b from-gray-700 to-gray-800" />
+        </div>
+
+        {/* Bonequinhos animados com plaquinhas - posicionados fixos, apenas animados */}
+        {participants.map((participant, index) => {
+          const colors = ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#8b5cf6', '#ec4899'];
+          const participantColor = colors[index % colors.length];
+          // Posição fixa distribuída pela arquibancada (não baseada em pontuação)
+          const fixedPosition = 10 + (index * 20) + Math.random() * 5;
+          
+          return (
+            <motion.div
+              key={`crowd-${participant.id}`}
+              className="absolute bottom-16 z-30"
+              style={{ left: `${fixedPosition}%` }}
+            >
+              {/* Plaquinha com nome melhorada */}
+              <motion.div
+                className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap z-40"
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 0.3 }}
+              >
+                <div className="bg-white px-2.5 py-1 rounded-md shadow-xl border-2 border-gray-400">
+                  <p className="text-[11px] font-bold text-gray-800">
+                    {participant.name.split(' ')[0]}
+                  </p>
+                </div>
+                {/* Seta apontando para baixo */}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-white" />
+              </motion.div>
+
+              {/* Bonequinho animado melhorado */}
+              <motion.div
+                className="relative"
+                animate={{ 
+                  y: [0, -6, 0],
+                }}
+                transition={{ 
+                  duration: 0.8 + Math.random() * 0.3,
+                  repeat: Infinity,
+                  delay: index * 0.15
+                }}
+              >
+                {/* Cabeça melhorada */}
+                <div 
+                  className="w-7 h-7 rounded-full mx-auto mb-1 shadow-lg border-2 border-white/50 relative"
+                  style={{ backgroundColor: participantColor }}
+                >
+                  {/* Olhos */}
+                  <div className="absolute top-2 left-1.5 w-1 h-1 bg-white rounded-full" />
+                  <div className="absolute top-2 right-1.5 w-1 h-1 bg-white rounded-full" />
+                  {/* Boca */}
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-3 h-1 bg-white/80 rounded-full" />
+                </div>
+                {/* Corpo melhorado */}
+                <div 
+                  className="w-6 h-8 rounded-lg mx-auto shadow-lg relative"
+                  style={{ backgroundColor: participantColor }}
+                >
+                  {/* Detalhes do corpo */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3 h-1 bg-white/30 rounded" />
+                </div>
+                {/* Braços (acenando) melhorados */}
+                <motion.div
+                  className="absolute top-2 -left-2 w-2.5 h-5 rounded-full shadow-md"
+                  style={{ backgroundColor: participantColor }}
+                  animate={{ rotate: [0, 25, -25, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: index * 0.15 }}
+                />
+                <motion.div
+                  className="absolute top-2 -right-2 w-2.5 h-5 rounded-full shadow-md"
+                  style={{ backgroundColor: participantColor }}
+                  animate={{ rotate: [0, -25, 25, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: index * 0.15 + 0.3 }}
+                />
+              </motion.div>
+            </motion.div>
+          );
+        })}
+
+        {/* Bonequinhos genéricos adicionais - multidão na arquibancada */}
+        {[...Array(12)].map((_, i) => {
+          const colors = ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#8b5cf6', '#ec4899', '#f97316', '#06b6d4'];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          const randomPosition = 5 + Math.random() * 90;
+          const randomDelay = Math.random() * 0.5;
+          
+          return (
+            <motion.div
+              key={`generic-crowd-${i}`}
+              className="absolute bottom-16 z-25"
+              style={{ left: `${randomPosition}%` }}
+            >
+              {/* Bonequinho genérico animado */}
+              <motion.div
+                className="relative"
+                animate={{ 
+                  y: [0, -5, 0],
+                }}
+                transition={{ 
+                  duration: 0.7 + Math.random() * 0.4,
+                  repeat: Infinity,
+                  delay: randomDelay
+                }}
+              >
+                {/* Cabeça */}
+                <div 
+                  className="w-6 h-6 rounded-full mx-auto mb-0.5 shadow-md border border-white/40 relative"
+                  style={{ backgroundColor: randomColor }}
+                >
+                  {/* Olhos */}
+                  <div className="absolute top-1.5 left-1 w-0.5 h-0.5 bg-white rounded-full" />
+                  <div className="absolute top-1.5 right-1 w-0.5 h-0.5 bg-white rounded-full" />
+                </div>
+                {/* Corpo */}
+                <div 
+                  className="w-5 h-6 rounded-md mx-auto shadow-md"
+                  style={{ backgroundColor: randomColor }}
+                />
+                {/* Braços */}
+                <motion.div
+                  className="absolute top-1.5 -left-1.5 w-2 h-4 rounded-full"
+                  style={{ backgroundColor: randomColor }}
+                  animate={{ rotate: [0, 20, -20, 0] }}
+                  transition={{ duration: 0.5, repeat: Infinity, delay: randomDelay }}
+                />
+                <motion.div
+                  className="absolute top-1.5 -right-1.5 w-2 h-4 rounded-full"
+                  style={{ backgroundColor: randomColor }}
+                  animate={{ rotate: [0, -20, 20, 0] }}
+                  transition={{ duration: 0.5, repeat: Infinity, delay: randomDelay + 0.25 }}
+                />
+              </motion.div>
+            </motion.div>
+          );
+        })}
+
       </div>
 
       {/* Área do pódio com fundo */}
@@ -396,3 +505,4 @@ const RaceTrack = () => {
 };
 
 export default RaceTrack;
+

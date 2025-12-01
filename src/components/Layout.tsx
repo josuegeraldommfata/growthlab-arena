@@ -72,8 +72,13 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-background">
       <aside className="fixed left-0 top-0 h-full w-64 bg-sidebar border-r border-sidebar-border">
-        <div className="p-6">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+        <div className="p-6 flex items-center gap-0.5">
+          <img 
+            src="/assets/folha degrade roxo.png" 
+            alt="GrowthLab Xp" 
+            className="h-8 w-auto object-contain"
+          />
+          <h1 className="text-lg font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent leading-none">
             GrowthLab Xp
           </h1>
         </div>
