@@ -22,14 +22,14 @@ const Races = () => {
 
   return (
     <Layout>
-      <div className="p-8">
+      <div className="p-4 md:p-6 lg:p-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl font-bold mb-2">Corridas 🏁</h1>
-          <p className="text-muted-foreground mb-8">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">Corridas 🏁</h1>
+          <p className="text-sm md:text-base text-muted-foreground mb-6 md:mb-8">
             Acompanhe as corridas e sua posição no ranking!
           </p>
 
@@ -44,10 +44,10 @@ const Races = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <div className="flex items-center gap-3 mb-2">
+                  <Card className="p-4 md:p-6">
+                    <div className="flex flex-col sm:flex-row items-start justify-between gap-4 mb-4">
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-2">
                           <Trophy className="w-6 h-6 text-primary" />
                           <h3 className="text-2xl font-bold">{race.name}</h3>
                         </div>

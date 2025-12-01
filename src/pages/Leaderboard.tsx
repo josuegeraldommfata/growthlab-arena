@@ -37,16 +37,16 @@ const Leaderboard = () => {
 
   return (
     <Layout>
-      <div className="p-8">
+      <div className="p-4 md:p-6 lg:p-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 md:mb-8">
             <div>
-              <h1 className="text-4xl font-bold mb-2 flex items-center gap-2">
-                Leaderboard <Trophy className="w-8 h-8 text-yellow-500" />
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 flex items-center gap-2">
+                Leaderboard <Trophy className="w-6 h-6 md:w-8 md:h-8 text-yellow-500" />
               </h1>
               <p className="text-muted-foreground">
                 Veja quem está no topo da competição!

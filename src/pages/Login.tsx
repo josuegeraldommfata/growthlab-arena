@@ -51,17 +51,18 @@ const Login = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
       >
-        <Card className="w-full max-w-md p-8 backdrop-blur-sm bg-card/80">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-4">
+        <Card className="w-full p-6 md:p-8 backdrop-blur-sm bg-card/80">
+          <div className="text-center mb-6 md:mb-8">
+            <div className="flex items-center justify-center gap-2 mb-3 md:mb-4">
               <img 
                 src="/assets/folha degrade roxo.png" 
                 alt="GrowthLab Xp" 
-                className="h-12 w-auto object-contain"
+                className="h-10 md:h-12 w-auto object-contain"
               />
               <motion.h1 
-                className="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent"
+                className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent"
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.3 }}
@@ -69,7 +70,7 @@ const Login = () => {
                 GrowthLab Xp
               </motion.h1>
             </div>
-            <p className="text-muted-foreground">Sistema de gamificação para equipes</p>
+            <p className="text-sm md:text-base text-muted-foreground">Sistema de gamificação para equipes</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">

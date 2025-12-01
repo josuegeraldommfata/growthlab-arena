@@ -170,30 +170,31 @@ const RaceTrack = () => {
 
 
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 p-4">
-        <div className="flex items-center justify-between">
+      <div className="absolute top-0 left-0 right-0 z-20 p-2 md:p-4">
+        <div className="flex items-center justify-between gap-2">
           <Button 
             onClick={() => navigate('/races')}
             variant="ghost"
-            className="text-gray-800 bg-white/50 hover:bg-white/70"
+            className="text-gray-800 bg-white/50 hover:bg-white/70 text-xs md:text-sm"
+            size="sm"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar
+            <ArrowLeft className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+            <span className="hidden sm:inline">Voltar</span>
           </Button>
           
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <Calendar className="w-4 h-4 text-gray-700" />
-              <span className="text-xs text-gray-700 bg-white/50 px-2 py-1 rounded">
+          <div className="text-center flex-1 min-w-0">
+            <div className="flex items-center justify-center gap-1 md:gap-2 mb-1">
+              <Calendar className="w-3 h-3 md:w-4 md:h-4 text-gray-700" />
+              <span className="text-[10px] md:text-xs text-gray-700 bg-white/50 px-1 md:px-2 py-0.5 md:py-1 rounded">
                 {new Date(race.startDate).toLocaleDateString()} - {new Date(race.endDate).toLocaleDateString()}
               </span>
             </div>
-            <h1 className="text-2xl md:text-4xl font-bold text-gray-800 drop-shadow-lg">
+            <h1 className="text-lg md:text-2xl lg:text-4xl font-bold text-gray-800 drop-shadow-lg truncate">
               🏁 {race.name}
             </h1>
           </div>
           
-          <div className="w-20" />
+          <div className="w-12 md:w-20" />
         </div>
       </div>
 
@@ -209,7 +210,7 @@ const RaceTrack = () => {
         <div className="h-3 bg-[repeating-linear-gradient(90deg,#dc2626_0px,#dc2626_25px,#ffffff_25px,#ffffff_50px)]" />
 
         {/* PISTA DE ASFALTO PRINCIPAL */}
-        <div className="relative h-[180px] bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 shadow-[inset_0_10px_30px_rgba(0,0,0,0.6)] overflow-visible">
+        <div className="relative h-[120px] md:h-[150px] lg:h-[180px] bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 shadow-[inset_0_10px_30px_rgba(0,0,0,0.6)] overflow-visible">
           {/* Textura do asfalto */}
           <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle,#fff_1px,transparent_1px)] bg-[size:10px_10px]" />
           
@@ -226,8 +227,9 @@ const RaceTrack = () => {
             const rankPositions = [25, 15, 5, 2]; // Posições fixas por rank (1º atrás, 4º na frente)
             const position = rankPositions[index] || 2;
             const totalLanes = participants.length;
-            const laneHeight = 180 / (totalLanes + 1);
-            const verticalPos = (index + 1) * laneHeight - 20;
+            // Altura da pista responsiva: 120px mobile, 150px tablet, 180px desktop
+            const laneHeight = 120 / (totalLanes + 1);
+            const verticalPos = (index + 1) * laneHeight - 10;
             
             return (
               <motion.div
@@ -252,8 +254,8 @@ const RaceTrack = () => {
                   transition={{ duration: 0.2, repeat: Infinity }}
                   style={{ transform: 'scaleX(-1)' }}
                 >
-                  <div className="absolute top-9 left-1 w-10 h-2 bg-black/40 rounded-full blur-sm" />
-                  <div className="text-4xl drop-shadow-xl" style={{ transform: 'scaleX(-1)' }}>
+                  <div className="absolute top-6 md:top-9 left-1 w-6 md:w-10 h-1 md:h-2 bg-black/40 rounded-full blur-sm" />
+                  <div className="text-2xl md:text-3xl lg:text-4xl drop-shadow-xl" style={{ transform: 'scaleX(-1)' }}>
                     {vehicles[index % vehicles.length]}
                   </div>
                   {/* Rastro de velocidade - atrás do carro (lado esquerdo) */}
@@ -269,16 +271,16 @@ const RaceTrack = () => {
 
                 {/* Badge - posicionado à frente (direita) do carro para não tampar */}
                 <motion.div
-                  className="absolute top-1/2 -translate-y-1/2 left-full ml-4 whitespace-nowrap z-30"
+                  className="absolute top-1/2 -translate-y-1/2 left-full ml-2 md:ml-4 whitespace-nowrap z-30"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.15 + 0.5 }}
                 >
-                  <div className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 px-2.5 py-1 rounded-full shadow-xl border-2 border-white/50">
-                    <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center font-bold text-emerald-600 text-xs">
+                  <div className="flex items-center gap-1 md:gap-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-full shadow-xl border-2 border-white/50">
+                    <div className="w-4 h-4 md:w-5 md:h-5 bg-white rounded-full flex items-center justify-center font-bold text-emerald-600 text-[10px] md:text-xs">
                       {index + 1}
                     </div>
-                    <span className="font-bold text-white text-[11px]">
+                    <span className="font-bold text-white text-[9px] md:text-[11px]">
                       {participant.name.split(' ')[0].toUpperCase()} | {participant.points}
                     </span>
                   </div>
@@ -316,14 +318,14 @@ const RaceTrack = () => {
       </div>
 
       {/* Arquibancada com bonequinhos animados - abaixo da pista e acima dos troféus */}
-      <div className="absolute bottom-32 left-0 right-0 h-28 z-20">
+      <div className="absolute bottom-24 md:bottom-32 left-0 right-0 h-20 md:h-28 z-20">
         {/* Estrutura da arquibancada melhorada */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-500 via-gray-600 to-gray-800 rounded-t-xl border-t-4 border-gray-400 shadow-2xl">
+        <div className="absolute bottom-0 left-0 right-0 h-16 md:h-24 bg-gradient-to-b from-gray-500 via-gray-600 to-gray-800 rounded-t-xl border-t-2 md:border-t-4 border-gray-400 shadow-2xl">
           {/* Degraus da arquibancada */}
-          <div className="absolute bottom-0 left-0 right-0 h-5 bg-gradient-to-b from-gray-400 to-gray-500 rounded-t-lg" />
-          <div className="absolute bottom-5 left-0 right-0 h-4 bg-gradient-to-b from-gray-500 to-gray-600" />
-          <div className="absolute bottom-9 left-0 right-0 h-3 bg-gradient-to-b from-gray-600 to-gray-700" />
-          <div className="absolute bottom-12 left-0 right-0 h-2 bg-gradient-to-b from-gray-700 to-gray-800" />
+          <div className="absolute bottom-0 left-0 right-0 h-3 md:h-5 bg-gradient-to-b from-gray-400 to-gray-500 rounded-t-lg" />
+          <div className="absolute bottom-3 md:bottom-5 left-0 right-0 h-2.5 md:h-4 bg-gradient-to-b from-gray-500 to-gray-600" />
+          <div className="absolute bottom-5.5 md:bottom-9 left-0 right-0 h-2 md:h-3 bg-gradient-to-b from-gray-600 to-gray-700" />
+          <div className="absolute bottom-7.5 md:bottom-12 left-0 right-0 h-1.5 md:h-2 bg-gradient-to-b from-gray-700 to-gray-800" />
         </div>
 
         {/* Bonequinhos animados com plaquinhas - posicionados fixos, apenas animados */}
@@ -336,23 +338,23 @@ const RaceTrack = () => {
           return (
             <motion.div
               key={`crowd-${participant.id}`}
-              className="absolute bottom-16 z-30"
+              className="absolute bottom-10 md:bottom-16 z-30 hidden sm:block"
               style={{ left: `${fixedPosition}%` }}
             >
               {/* Plaquinha com nome melhorada */}
               <motion.div
-                className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap z-40"
+                className="absolute -top-8 md:-top-10 left-1/2 -translate-x-1/2 whitespace-nowrap z-40"
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 + 0.3 }}
               >
-                <div className="bg-white px-2.5 py-1 rounded-md shadow-xl border-2 border-gray-400">
-                  <p className="text-[11px] font-bold text-gray-800">
+                <div className="bg-white px-2 md:px-2.5 py-0.5 md:py-1 rounded-md shadow-xl border-2 border-gray-400">
+                  <p className="text-[9px] md:text-[11px] font-bold text-gray-800">
                     {participant.name.split(' ')[0]}
                   </p>
                 </div>
                 {/* Seta apontando para baixo */}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-white" />
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] md:border-l-[6px] border-r-[4px] md:border-r-[6px] border-t-[4px] md:border-t-[6px] border-transparent border-t-white" />
               </motion.div>
 
               {/* Bonequinho animado melhorado */}
@@ -369,32 +371,32 @@ const RaceTrack = () => {
               >
                 {/* Cabeça melhorada */}
                 <div 
-                  className="w-7 h-7 rounded-full mx-auto mb-1 shadow-lg border-2 border-white/50 relative"
+                  className="w-5 h-5 md:w-7 md:h-7 rounded-full mx-auto mb-0.5 md:mb-1 shadow-lg border-2 border-white/50 relative"
                   style={{ backgroundColor: participantColor }}
                 >
                   {/* Olhos */}
-                  <div className="absolute top-2 left-1.5 w-1 h-1 bg-white rounded-full" />
-                  <div className="absolute top-2 right-1.5 w-1 h-1 bg-white rounded-full" />
+                  <div className="absolute top-1 md:top-2 left-1 md:left-1.5 w-0.5 md:w-1 h-0.5 md:h-1 bg-white rounded-full" />
+                  <div className="absolute top-1 md:top-2 right-1 md:right-1.5 w-0.5 md:w-1 h-0.5 md:h-1 bg-white rounded-full" />
                   {/* Boca */}
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-3 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-1 md:bottom-2 left-1/2 -translate-x-1/2 w-2 md:w-3 h-0.5 md:h-1 bg-white/80 rounded-full" />
                 </div>
                 {/* Corpo melhorado */}
                 <div 
-                  className="w-6 h-8 rounded-lg mx-auto shadow-lg relative"
+                  className="w-4 h-6 md:w-6 md:h-8 rounded-lg mx-auto shadow-lg relative"
                   style={{ backgroundColor: participantColor }}
                 >
                   {/* Detalhes do corpo */}
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3 h-1 bg-white/30 rounded" />
+                  <div className="absolute top-1 md:top-2 left-1/2 -translate-x-1/2 w-2 md:w-3 h-0.5 md:h-1 bg-white/30 rounded" />
                 </div>
                 {/* Braços (acenando) melhorados */}
                 <motion.div
-                  className="absolute top-2 -left-2 w-2.5 h-5 rounded-full shadow-md"
+                  className="absolute top-1 md:top-2 -left-1.5 md:-left-2 w-2 h-4 md:w-2.5 md:h-5 rounded-full shadow-md"
                   style={{ backgroundColor: participantColor }}
                   animate={{ rotate: [0, 25, -25, 0] }}
                   transition={{ duration: 0.6, repeat: Infinity, delay: index * 0.15 }}
                 />
                 <motion.div
-                  className="absolute top-2 -right-2 w-2.5 h-5 rounded-full shadow-md"
+                  className="absolute top-1 md:top-2 -right-1.5 md:-right-2 w-2 h-4 md:w-2.5 md:h-5 rounded-full shadow-md"
                   style={{ backgroundColor: participantColor }}
                   animate={{ rotate: [0, -25, 25, 0] }}
                   transition={{ duration: 0.6, repeat: Infinity, delay: index * 0.15 + 0.3 }}
@@ -464,13 +466,13 @@ const RaceTrack = () => {
       </div>
 
       {/* Área do pódio com fundo */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-sky-100 to-sky-200 z-25">
+      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-t from-sky-100 to-sky-200 z-25">
         {/* Pódio centralizado */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-end gap-2">
+        <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex items-end gap-1 md:gap-2">
           {[1, 0, 2].map((podiumIndex) => {
             const participant = participants[podiumIndex];
             if (!participant) return null;
-            const heights = ['h-14', 'h-20', 'h-10'];
+            const heights = ['h-10 md:h-14', 'h-14 md:h-20', 'h-8 md:h-10'];
             const colors = [
               'from-gray-300 to-gray-400 border-gray-200',
               'from-yellow-400 to-yellow-500 border-yellow-300', 
@@ -485,15 +487,15 @@ const RaceTrack = () => {
                 transition={{ delay: 2 + podiumIndex * 0.15, type: "spring" }}
                 className="text-center"
               >
-                <div className={`w-18 ${heights[podiumIndex]} rounded-t-lg flex flex-col items-center justify-center bg-gradient-to-b ${colors[podiumIndex]} shadow-lg border-t-4`}>
-                  <Trophy className="w-4 h-4 text-white mb-0.5 drop-shadow" />
-                  <span className="text-sm font-bold text-white drop-shadow">{positions[podiumIndex]}°</span>
+                <div className={`w-12 md:w-18 ${heights[podiumIndex]} rounded-t-lg flex flex-col items-center justify-center bg-gradient-to-b ${colors[podiumIndex]} shadow-lg border-t-2 md:border-t-4`}>
+                  <Trophy className="w-3 h-3 md:w-4 md:h-4 text-white mb-0.5 drop-shadow" />
+                  <span className="text-xs md:text-sm font-bold text-white drop-shadow">{positions[podiumIndex]}°</span>
                 </div>
-                <div className="bg-gray-800/95 px-1.5 py-0.5 rounded-b-lg shadow-lg">
-                  <p className="text-[8px] text-white font-medium truncate max-w-[70px]">
+                <div className="bg-gray-800/95 px-1 md:px-1.5 py-0.5 rounded-b-lg shadow-lg">
+                  <p className="text-[7px] md:text-[8px] text-white font-medium truncate max-w-[50px] md:max-w-[70px]">
                     {participant.name}
                   </p>
-                  <p className="text-[8px] text-emerald-400 font-bold">{participant.points} pts</p>
+                  <p className="text-[7px] md:text-[8px] text-emerald-400 font-bold">{participant.points} pts</p>
                 </div>
               </motion.div>
             );
