@@ -216,9 +216,22 @@ const Exchange = () => {
                           )}
 
                           <div className="text-center mb-3">
-                            <span className="text-4xl block mb-2 group-hover:scale-110 transition-transform">
-                              {reward.emoji}
-                            </span>
+                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center group-hover:scale-110 transition-transform">
+                              {reward.image ? (
+                                <img 
+                                  src={reward.image} 
+                                  alt={reward.name}
+                                  className="w-12 h-12 object-contain rounded-lg"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                                  }}
+                                />
+                              ) : null}
+                              <span className={`text-4xl ${reward.image ? 'hidden' : ''}`}>
+                                {reward.emoji}
+                              </span>
+                            </div>
                             <h3 className="font-semibold text-sm leading-tight line-clamp-2">
                               {reward.name}
                             </h3>
@@ -300,7 +313,22 @@ const Exchange = () => {
                 >
                   <Card className="p-6">
                     <div className="text-center mb-6">
-                      <span className="text-6xl block mb-4">{selectedReward.emoji}</span>
+                      <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                        {selectedReward.image ? (
+                          <img 
+                            src={selectedReward.image} 
+                            alt={selectedReward.name}
+                            className="w-20 h-20 object-contain rounded-xl"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                            }}
+                          />
+                        ) : null}
+                        <span className={`text-6xl ${selectedReward.image ? 'hidden' : ''}`}>
+                          {selectedReward.emoji}
+                        </span>
+                      </div>
                       <h2 className="text-2xl font-bold mb-2">{selectedReward.name}</h2>
                       {selectedReward.description && (
                         <p className="text-muted-foreground">{selectedReward.description}</p>
