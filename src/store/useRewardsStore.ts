@@ -36,13 +36,13 @@ interface RewardsState {
 
 const mockRewards: Reward[] = [
   // Food & Drinks
-  { id: '1', name: 'Trident', price: 30, category: 'food', emoji: '🍬', image: 'https://logo.clearbit.com/trident.com', stock: 50 },
+  { id: '1', name: 'Trident', price: 30, category: 'food', emoji: '🍬', image: 'https://logo.clearbit.com/mondelezinternational.com', stock: 50 },
   { id: '2', name: 'Sonho de Valsa', price: 15, category: 'food', emoji: '🍫', image: 'https://logo.clearbit.com/lacta.com.br', stock: 100 },
-  { id: '3', name: 'Fini', price: 70, category: 'food', emoji: '🍭', image: 'https://logo.clearbit.com/fini.com.br', stock: 30 },
+  { id: '3', name: 'Fini', price: 70, category: 'food', emoji: '🍭', image: 'https://logo.clearbit.com/finicompany.com', stock: 30 },
   { id: '4', name: 'Coca Cola', price: 50, category: 'food', emoji: '🥤', image: 'https://logo.clearbit.com/coca-cola.com', stock: 40 },
   { id: '5', name: 'RedBull', price: 90, category: 'food', emoji: '🥫', image: 'https://logo.clearbit.com/redbull.com', stock: 25 },
   { id: '6', name: 'Bombom Branco Cacau Show', price: 70, category: 'food', emoji: '🍬', image: 'https://logo.clearbit.com/cacaushow.com.br', stock: 50 },
-  { id: '7', name: 'Wafer Mil-Folhas', price: 160, category: 'food', emoji: '🧇', stock: 20 },
+  { id: '7', name: 'Wafer Mil-Folhas', price: 160, category: 'food', emoji: '🧇', image: 'https://logo.clearbit.com/bauducco.com.br', stock: 20 },
   { id: '8', name: 'Big Mac', price: 120, category: 'food', emoji: '🍔', image: 'https://logo.clearbit.com/mcdonalds.com', stock: 15 },
   { id: '9', name: 'Combo Big Mac', price: 250, category: 'food', emoji: '🍟', image: 'https://logo.clearbit.com/mcdonalds.com', stock: 10 },
   
@@ -102,9 +102,9 @@ const mockRewards: Reward[] = [
   { id: '42', name: '2 Ingressos Rainbow Falls', price: 800, category: 'experience', emoji: '💦', stock: 8 },
   
   // Travel - Premium Tier 4D
-  { id: '43', name: 'Viagem Beto Carrero + Hospedagem', price: 5000, category: 'travel', emoji: '🎡', tier: '4D', stock: 3 },
+  { id: '43', name: 'Viagem Beto Carrero + Hospedagem', price: 5000, category: 'travel', emoji: '🎡', image: 'https://logo.clearbit.com/betocarrero.com.br', tier: '4D', stock: 3 },
   { id: '44', name: 'Viagem Disney + Acompanhante', price: 15000, category: 'travel', emoji: '🏰', image: 'https://logo.clearbit.com/disney.com', tier: '4D', stock: 2, description: 'Voo, hospedagem e ingresso para o parque' },
-  { id: '45', name: 'Porto Seguro + Acompanhante', price: 8000, category: 'travel', emoji: '🏖️', tier: '4D', stock: 3, description: 'Passagem, hotel e refeições' },
+  { id: '45', name: 'Porto Seguro + Acompanhante', price: 8000, category: 'travel', emoji: '🏖️', image: 'https://logo.clearbit.com/portoseguro.org.br', tier: '4D', stock: 3, description: 'Passagem, hotel e refeições' },
 ];
 
 export const useRewardsStore = create<RewardsState>()(
