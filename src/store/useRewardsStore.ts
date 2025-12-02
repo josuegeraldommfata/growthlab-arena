@@ -89,17 +89,17 @@ const mockRewards: Reward[] = [
   { id: '33', name: 'Nobreak', price: 300, category: 'voucher', emoji: '🔌', stock: 8 },
   
   // Experiences - Food
-  { id: '34', name: 'Almoço Padaria América R$30', price: 300, category: 'experience', emoji: '🥐', stock: 10 },
-  { id: '35', name: 'Vale Almoço Estrela dos Pampas R$90', price: 900, category: 'experience', emoji: '🥘', stock: 8 },
+  { id: '34', name: 'Almoço Padaria América R$30', price: 300, category: 'experience', emoji: '🥐', image: 'https://logo.clearbit.com/padariaamerica.com.br', stock: 10 },
+  { id: '35', name: 'Vale Almoço Estrela dos Pampas R$90', price: 900, category: 'experience', emoji: '🥘', image: 'https://logo.clearbit.com/estreladospampasabc.com.br', stock: 8 },
   { id: '36', name: '2 Rodízios Ragazzo', price: 500, category: 'experience', emoji: '🍕', image: 'https://logo.clearbit.com/ragazzo.com.br', stock: 10 },
-  { id: '37', name: 'Rodízio Villa México', price: 900, category: 'experience', emoji: '🌮', stock: 8 },
+  { id: '37', name: 'Rodízio Villa México', price: 900, category: 'experience', emoji: '🌮', image: 'https://logo.clearbit.com/villamexico.com.br', stock: 8 },
   { id: '38', name: 'Rodízio Japonês', price: 1000, category: 'experience', emoji: '🍣', stock: 6 },
   
   // Experiences - Entertainment
   { id: '39', name: '2 Ingressos Cinemark', price: 500, category: 'experience', emoji: '🎬', image: 'https://logo.clearbit.com/cinemark.com.br', stock: 15 },
-  { id: '40', name: '2 Ingressos Zoológico SP', price: 1000, category: 'experience', emoji: '🦁', stock: 10 },
-  { id: '41', name: '4 Ingressos Magic City', price: 1400, category: 'experience', emoji: '🎢', stock: 5 },
-  { id: '42', name: '2 Ingressos Rainbow Falls', price: 800, category: 'experience', emoji: '💦', stock: 8 },
+  { id: '40', name: '2 Ingressos Zoológico SP', price: 1000, category: 'experience', emoji: '🦁', image: 'https://logo.clearbit.com/zoologico.com.br', stock: 10 },
+  { id: '41', name: '4 Ingressos Magic City', price: 1400, category: 'experience', emoji: '🎢', image: 'https://logo.clearbit.com/magiccity.com.br', stock: 5 },
+  { id: '42', name: '2 Ingressos Rainbow Falls', price: 800, category: 'experience', emoji: '💦', image: 'https://logo.clearbit.com/waterfall.com.br', stock: 8 },
   
   // Travel - Premium Tier 4D
   { id: '43', name: 'Viagem Beto Carrero + Hospedagem', price: 5000, category: 'travel', emoji: '🎡', image: 'https://logo.clearbit.com/betocarrero.com.br', tier: '4D', stock: 3 },
