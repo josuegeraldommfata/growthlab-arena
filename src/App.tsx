@@ -9,7 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import Tasks from "./pages/Tasks";
 import Races from "./pages/Races";
 import Learn from "./pages/Learn";
-import Timeline from "./pages/Timeline";
+import SocialNetwork from "./pages/SocialNetwork";
+import AnnualMissions from "./pages/AnnualMissions";
 import TVDashboard from "./pages/TVDashboard";
 import Shop from "./pages/Shop";
 import Notifications from "./pages/Notifications";
@@ -21,6 +22,7 @@ import AdminProducts from "./pages/AdminProducts";
 import AdminTasks from "./pages/AdminTasks";
 import AdminRewards from "./pages/AdminRewards";
 import AdminUsers from "./pages/AdminUsers";
+import AdminAnnualMissions from "./pages/AdminAnnualMissions";
 import RaceTrack from "./pages/RaceTrack";
 import Exchange from "./pages/Exchange";
 import RaceConfig from "./pages/RaceConfig";
@@ -49,7 +51,8 @@ const App = () => (
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/races" element={<Races />} />
           <Route path="/learn" element={<Learn />} />
-          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/social" element={<SocialNetwork />} />
+          <Route path="/annual-missions" element={<AnnualMissions />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/exchange" element={<Exchange />} />
           <Route path="/notifications" element={<Notifications />} />
@@ -68,6 +71,7 @@ const App = () => (
           <Route path="/admin/rewards" element={<AdminRewards />} />
           <Route path="/admin/users" element={<AdminUsers />} />
           <Route path="/admin/learning-path" element={<LearningPath />} />
+          <Route path="/admin/annual-missions" element={<AdminAnnualMissions />} />
           <Route path="/race-track/:raceId" element={<RaceTrack />} />
           <Route path="/race-config/:raceId" element={<RaceConfig />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
