@@ -4,10 +4,11 @@ import Layout from '@/components/Layout';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Progress } from '@/components/ui/progress';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useGameStore } from '@/store/useGameStore';
 import { useToast } from '@/hooks/use-toast';
-import { Target, Zap, Coins } from 'lucide-react';
+import { Target, Zap, Coins, CheckCircle2, Circle } from 'lucide-react';
 
 const Tasks = () => {
   const user = useAuthStore((state) => state.user);
@@ -16,6 +17,9 @@ const Tasks = () => {
   const { toast } = useToast();
   
   const userTasks = tasks.filter(t => t.userId === user?.id);
+  const completedTasks = userTasks.filter(t => t.completed).length;
+  const totalTasks = userTasks.length;
+  const progressPercent = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
   const handleCompleteTask = (taskId: string, xp: number, coins: number) => {
     completeTask(taskId);
@@ -60,9 +64,44 @@ const Tasks = () => {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-4xl font-bold mb-2">Minhas Tarefas 🎯</h1>
-          <p className="text-muted-foreground mb-8">
+          <p className="text-muted-foreground mb-6">
             Complete suas tarefas e ganhe XP e Coins!
           </p>
+
+          {/* Progress Card */}
+          {totalTasks > 0 && (
+            <Card className="p-6 mb-6 bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/20 rounded-full">
+                    <Target className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Progresso das Tarefas</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {completedTasks} de {totalTasks} tarefas concluídas
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="text-3xl font-bold text-primary">{Math.round(progressPercent)}%</span>
+                </div>
+              </div>
+              
+              <Progress value={progressPercent} className="h-3 mb-3" />
+              
+              <div className="flex justify-between text-sm">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Circle className="w-4 h-4" />
+                  <span>{totalTasks - completedTasks} pendentes</span>
+                </div>
+                <div className="flex items-center gap-2 text-green-500">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>{completedTasks} concluídas</span>
+                </div>
+              </div>
+            </Card>
+          )}
 
           <div className="grid gap-4">
             {userTasks.map((task, index) => (
